@@ -1,1 +1,40 @@
+name: Build Windows app
 
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller pytest
+
+      - name: Run tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: pytest -q tests
+
+      - name: Check the app starts
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -c "import sys; sys.path.insert(0,'app'); import main; from PySide6.QtWidgets import QApplication; app=QApplication([]); w=main.MainWindow(); print('window OK')"
+
+      - name: Build exe
+        run: pyinstaller --noconfirm --onefile --windowed --name ApexPDF --paths app app/main.py
+
+      - name: Upload exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: ApexPDF-windows
+          path: dist/ApexPDF.exe
