@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 160 160">
+  <rect x="0" y="0" width="160" height="160" rx="28" fill="#F5B841"/>
+  <g fill="none" stroke="#24476B" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 132 L80 30 L132 132"/>
+    <path d="M46 96 L114 96"/>
+    <path d="M62 64 L98 64"/>
+    <path d="M62 64 L80 96 L98 64"/>
+  </g>
+  <circle cx="80" cy="30" r="9" fill="#D9860B" stroke="#24476B" stroke-width="3"/>
+  <rect x="86" y="110" width="66" height="38" rx="8" fill="#D93025" stroke="#FFFFFF" stroke-width="3"/>
+  <text x="119" y="136.5" text-anchor="middle" font-family="DejaVu Sans, Segoe UI, Arial, sans-serif" font-weight="bold" font-size="20" fill="#FFFFFF">PDF</text>
+</svg>

@@ -54,6 +54,20 @@ DRAG_TOOLS = {"select", "highlight", "underline", "strike", "rect", "textbox",
               "sign", "image", "whiteout"}
 
 
+def resource_path(rel: str) -> str:
+    """Path to a bundled file (works from source and inside the PyInstaller exe)."""
+    base = getattr(sys, "_MEIPASS", os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+    return os.path.join(base, rel)
+
+
+def app_icon() -> QIcon:
+    for name in ("assets/apexpdf.ico", "assets/apexpdf.png"):
+        p = resource_path(name)
+        if os.path.exists(p):
+            return QIcon(p)
+    return QIcon()
+
+
 def app_data_dir() -> str:
     d = QStandardPaths.writableLocation(QStandardPaths.StandardLocation.AppDataLocation)
     os.makedirs(d, exist_ok=True)
@@ -1340,9 +1354,16 @@ class MainWindow(QMainWindow):
 
 
 def main():
+    if sys.platform == "win32":
+        try:  # own taskbar icon instead of the generic Python one
+            import ctypes
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Apex.ApexPDF")
+        except Exception:  # noqa: BLE001
+            pass
     app = QApplication(sys.argv)
     app.setApplicationName("ApexPDF")
     app.setOrganizationName("Apex")
+    app.setWindowIcon(app_icon())
     w = MainWindow()
     w.show()
     if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
