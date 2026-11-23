@@ -31,7 +31,7 @@ jobs:
         run: python -c "import sys; sys.path.insert(0,'app'); import main; from PySide6.QtWidgets import QApplication; app=QApplication([]); w=main.MainWindow(); print('window OK')"
 
       - name: Build exe
-                run: pyinstaller --noconfirm --onefile --windowed --name ApexPDF --icon assets/apexpdf.ico --add-data "assets/apexpdf.ico;assets" --add-data "assets/apexpdf.png;assets" --paths app app/main.py
+        run: pyinstaller --noconfirm --onefile --windowed --name ApexPDF --icon assets/apexpdf.ico --add-data "assets/apexpdf.ico;assets" --add-data "assets/apexpdf.png;assets" --paths app app/main.py
 
       - name: Upload exe
         uses: actions/upload-artifact@v4
